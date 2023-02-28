@@ -1,0 +1,43 @@
+<!doctype HTML>
+<html>
+
+<head>
+  <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Radio</title>
+</head>
+
+<body>
+  <div id="radio">
+    <img src="radio.png" alt="">
+
+    <div class="container">
+      <div class="channel">
+        <h3>Channel</h3>
+        <input id="channel" type="number" name="channel" value="" min="1" max="999" step=".01"
+          placeholder="1-999"><br />
+        <button id="channelsubmit" type="submit" name="channelsubmit">Submit</button>
+        <button id="memberlist" type="submit" name="memberlist">Members</button>
+      </div>
+      <div class="members">
+        <h3>Members</h3>
+        <div class="members-container">
+          <!-- <div class="member">
+                <h1 class="member-header">Lex</h1>
+            </div>
+            <div class="member">
+                <h1 class="member-header">Light</h1>
+            </div> -->
+        </div>
+        <button id="backchannel" type="submit" name="backchannel">Back</button>
+      </div>
+    </div>
+
+    <a class="volume-up"></a>
+    <a class="volume-down"></a>
+    <a class="power-onoff"></a>
+  </div>
+  <script src="script.js" type="text/javascript"></script>
+</body>
+
+</html>
