@@ -2,6 +2,11 @@
 This is a radio which works with pma-voice and shows members list in the radio channel.
 (currently works on qbcore only but can easily work on esx and other frameworks by changing some stuff)
 
+Dependencies:
+
+- [pma-voice (Latest, main branch)](https://github.com/AvarianKnight/pma-voice/archive/refs/heads/main.zip)
+- qb-core
+
 Preview:
 
 - Join Channels
