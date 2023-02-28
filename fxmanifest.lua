@@ -3,7 +3,7 @@ game "gta5"
 lua54 "yes"
 
 author 'Cadburry'
-description 'Radio System for SOULCITY'
+description 'Radio System'
 
 shared_scripts {
     "config.lua"
