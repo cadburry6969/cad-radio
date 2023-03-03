@@ -234,7 +234,7 @@ end)
 CreateThread(function()
     while true do
         if LocalPlayer.state.radioChannel ~= 0 then
-            if not QBCore.Functions.HasItem("radio", 1) then
+            if not exports["qb-inventory"]:HasItem("radio", 1) then
                 leaveRadio()
             end
         end
