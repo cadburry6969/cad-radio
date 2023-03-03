@@ -5,6 +5,58 @@ local function notify(msg, type)
     TriggerEvent("QBCore:Notify", msg, type)
 end
 
+local function DisableControls()
+    local isdisabled = true
+    CreateThread(function()
+        while isdisabled do
+            if IsNuiFocusKeepingInput() then
+                DisablePlayerFiring(PlayerPedId(), true)
+                DisableControlAction(0, 1, true)
+                DisableControlAction(0, 2, true)
+                DisableControlAction(0, 24, true)
+                DisableControlAction(0, 25, true)
+                DisableControlAction(0, 38, true)
+                DisableControlAction(0, 45, true)
+                DisableControlAction(0, 46, true)
+                DisableControlAction(0, 245, true)
+                DisableControlAction(0, 249, true)
+                DisableControlAction(0, 263, true)
+                DisableControlAction(0, 264, true)
+                DisableControlAction(0, 257, true)
+                DisableControlAction(0, 140, true)
+                DisableControlAction(0, 141, true)
+                DisableControlAction(0, 142, true)
+                DisableControlAction(0, 143, true)
+                DisableControlAction(0, 322, true)
+            else
+                isdisabled = false
+            end
+            Wait(4)
+        end
+    end)
+end
+
+local radObj = nil
+local function radioAnimation(state)
+	RequestAnimDict('cellphone@')
+    while not HasAnimDictLoaded('cellphone@') do
+        Wait(0)
+    end
+	if state then
+		TriggerEvent("attachItemRadio","radio01")
+		TaskPlayAnim(PlayerPedId(), "cellphone@", "cellphone_text_read_base", 2.0, 3.0, -1, 49, 0, false, false, false)
+		radObj = CreateObject(`prop_cs_hand_radio`, 1.0, 1.0, 1.0, true, true, false)
+		AttachEntityToEntity(radObj, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.14, 0.01, -0.02, 110.0, 120.0, -15.0, true, false, false, false, 2, true)
+	else
+		StopAnimTask(PlayerPedId(), "cellphone@", "cellphone_text_read_base", 1.0)
+		ClearPedTasks(PlayerPedId())
+		if radObj then
+			DeleteObject(radObj)
+            radObj = nil
+		end
+	end
+end
+
 ---#JOIN/LEAVE/VOLUME
 local function leaveRadio()
     TriggerServerEvent("radio:removeFromList", LocalPlayer.state.radioChannel)
@@ -126,6 +178,8 @@ end)
 RegisterNUICallback('escape', function(_, cb)
     SendNUIMessage({enable=false, type="show"})
     SetNuiFocus(false, false)
+    SetNuiFocusKeepInput(false)
+    radioAnimation(false)
     cb("ok")
 end)
 
@@ -163,8 +217,18 @@ RegisterNUICallback("volumeDown", function(_, cb)
 end)
 
 RegisterNetEvent("radio:openRadio", function()
+    if IsNuiFocusKeepingInput() then
+        SendNUIMessage({enable=false, type="show"})
+        SetNuiFocus(false, false)
+        SetNuiFocusKeepInput(false)
+        radioAnimation(false)
+        return
+    end
     SendNUIMessage({enable=true, type="show"})
     SetNuiFocus(true, true)
+    SetNuiFocusKeepInput(true)
+    radioAnimation(true)
+    DisableControls()
 end)
 
 CreateThread(function()

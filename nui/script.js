@@ -35,8 +35,8 @@ $(function () {
         }
     });
 
-    document.onkeyup = function (data) {
-        if (data.which == 27) { // Escape key
+    document.onkeydown = function (data) {
+        if (data.key == 'Escape' || data.key == 'Backspace') { // Escape key
             $.post('https://cad-radio/escape', JSON.stringify({}));
         }
     };
