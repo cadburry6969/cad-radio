@@ -243,21 +243,25 @@ CreateThread(function()
 end)
 
 ---#RADIO EFFECT DEFAULTS
-local radioEffectId = CreateAudioSubmix('Radio')
-SetAudioSubmixEffectRadioFx(radioEffectId, 0)
-SetAudioSubmixEffectParamInt(radioEffectId, 0, GetHashKey('default'), 1)
-for filter, value in pairs(Config.DefaultRadioFilter) do
-    SetAudioSubmixEffectParamFloat(radioEffectId, 0, filter, value)
-end
-SetAudioSubmixOutputVolumes(
-    radioEffectId,
-    0,
-    1.0 --[[ frontLeftVolume ]],
-    0.25 --[[ frontRightVolume ]],
-    0.0 --[[ rearLeftVolume ]],
-    0.0 --[[ rearRightVolume ]],
-    1.0 --[[ channel5Volume ]],
-    1.0 --[[ channel6Volume ]]
-)
-AddAudioSubmixOutput(radioEffectId, 0)
-exports["pma-voice"]:setEffectSubmix("radio", radioEffectId)
+CreateThread(function()
+	radioEffectId = CreateAudioSubmix('Radio_Default')
+        SetAudioSubmixEffectRadioFx(radioEffectId, 0)
+        SetAudioSubmixEffectParamInt(radioEffectId, 0, `default`, 1)
+
+      	for filter, value in pairs(Config.DefaultRadioFilter) do
+    	    SetAudioSubmixEffectParamFloat(radioEffectId, 0, filter, value)
+	end
+
+        SetAudioSubmixOutputVolumes(
+            radioEffectId,
+            0,
+            0.5 ,
+            0.5,
+            0.0,
+            0.0,
+            1.0,
+            1.0
+        )
+        AddAudioSubmixOutput(radioEffectId, 0)
+        exports['pma-voice']:setEffectSubmix('radio', radioEffectId)
+end)
